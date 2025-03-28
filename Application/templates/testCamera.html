@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Test Caméra</title>
+  <style>
+    .video-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+
+    #video {
+        width: 320px;
+        height: 240px;
+        border: 2px solid #208A9D;
+        border-radius: 8px;
+    }
+
+    #capture-status {
+        font-weight: bold;
+        color: #208A9D;
+    }
+  </style>
+</head>
+<body>
+  <h2>Test activation caméra</h2>
+
+  <button id="biometrics-btn">🎥 Activer la caméra</button>
+
+  <div id="camera-preview" class="video-container" style="display: none;">
+    <video id="video" autoplay></video>
+    <p id="capture-status">Préparation de la caméra...</p>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const preview = document.getElementById("camera-preview");
+      const video = document.getElementById("video");
+      const status = document.getElementById("capture-status");
+      const biometricsBtn = document.getElementById("biometrics-btn");
+
+      biometricsBtn.addEventListener("click", async () => {
+        preview.style.display = "flex";
+        status.textContent = "Connexion à la caméra...";
+
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+          video.srcObject = stream;
+          status.textContent = "Caméra activée !";
+
+        } catch (err) {
+          console.error(err);
+          status.textContent = "Erreur d'accès à la caméra.";
+        }
+      });
+    });
+  </script>
+</body>
+</html>
