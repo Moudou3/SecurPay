@@ -1,0 +1,27 @@
+<!-- payment.html -->
+<div id="payment-popup" class="payment-popup hidden">
+    <h2 class="title">Payment Details</h2>
+    <img src="{{ url_for('static', filename='images/card.png') }}" alt="Cards" class="card-img">
+
+    <form id="payment-form">
+        <label>Card Number</label>
+        <input type="text" placeholder="Valid Card Number" required>
+
+        <div class="row">
+            <div class="column">
+                <label>Expiration Date</label>
+                <input type="text" placeholder="MM/YY" required>
+            </div>
+            <div class="column">
+                <label>CV Code</label>
+                <input type="text" placeholder="CVC" required>
+            </div>
+        </div>
+
+        <button type="submit" class="pay-btn"><i class="bi bi-lock-fill"></i> Pay 1€</button>
+    </form>
+
+    <span class="payment-close"><i class="bi bi-x-lg"></i></span>
+</div>
+
+<div id="payment-overlay" class="payment-overlay hidden"></div>
