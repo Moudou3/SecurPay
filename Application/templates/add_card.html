@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="add-card-container">
+    <h2 class="card-title">Card Details for adding</h2>
+    
+    <div class="add-card-content">
+        <div class="left-panel">
+            <img src="{{ url_for('static', filename='images/card.png') }}" alt="Card Image" class="card-img">
+            <div class="card-actions">
+                <a href="#" class="link-primary">Confirm your credit card</a>
+                <a href="#" class="link-danger">Remove card</a>
+            </div>
+        </div>
+
+        <form class="right-panel" action="/add_card" method="POST">
+            <label for="exp-date">Expiration date</label>
+            <input type="text" id="exp-date" name="expiration" placeholder="MM/YYYY" required>
+
+            <label for="cvv">CVV</label>
+            <input type="text" id="cvv" name="cvv" placeholder="Required" required>
+
+            <label for="holder">Cardholder’s name</label>
+            <input type="text" id="holder" name="holder_name" value="{{ first_name }} {{ last_name }}" readonly>
+
+            <label for="address">Billing address</label>
+            <input type="text" id="address" name="billing_address" placeholder="Your billing address" required>
+
+            <button type="submit" class="save-btn">Save</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

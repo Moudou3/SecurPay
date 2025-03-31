@@ -21,6 +21,18 @@ class User(db.Model):
     password = db.Column(db.String(100))
     biometrics = db.Column(db.Text)
 
+# Modèle carte
+class Card(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    expiration = db.Column(db.String(7))  # format MM/YYYY
+    cvv = db.Column(db.String(4))
+    holder_name = db.Column(db.String(100))
+    billing_address = db.Column(db.String(200))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+    user = db.relationship('User', backref=db.backref('cards', lazy=True))
+
+
 @app.route('/')
 def home():
     return render_template('home.html')
@@ -89,6 +101,26 @@ def signup_modal():
         })
 
     return render_template('signup_modal.html')
+
+# Ajout d'une carte
+@app.route('/add_card', methods=['GET', 'POST'])
+def add_card():
+    if 'username' not in session:
+        return redirect('/')
+
+    if request.method == 'POST':
+        expiration = request.form['expiration']
+        cvv = request.form['cvv']
+        holder_name = request.form['holder_name']
+        billing_address = request.form['billing_address']
+
+        # Ici tu peux faire un insert dans la base (à ajouter selon ton modèle de carte)
+        print("Carte ajoutée :", expiration, cvv, holder_name, billing_address)
+
+        return redirect('/manage_cards')  # ou une autre page
+
+    return render_template('add_card.html', first_name=session['first_name'], last_name=session['last_name'])
+
 
 # Manage_cards
 @app.route('/manage_cards')
