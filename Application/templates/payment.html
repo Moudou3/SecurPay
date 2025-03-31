@@ -4,9 +4,16 @@
     <img src="{{ url_for('static', filename='images/card.png') }}" alt="Cards" class="card-img">
 
     <form id="payment-form">
-        <label>Card Number</label>
-        <input type="text" placeholder="Valid Card Number" required>
-
+        <div class="row">
+            <div class="column">
+                <label>Card Number</label>
+                <input type="text" placeholder="Valid Card Number" required>    
+            </div>
+            <div class="column">
+                <label>Amount</label>
+                <input type="text" placeholder="100€" required>
+            </div>
+        </div>
         <div class="row">
             <div class="column">
                 <label>Expiration Date</label>

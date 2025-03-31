@@ -13,6 +13,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     last_name = db.Column(db.String(100))
     first_name = db.Column(db.String(100))
+    gender = db.Column(db.String(1))
     birthday = db.Column(db.String(20))
     email = db.Column(db.String(120), unique=True)
     phone = db.Column(db.String(20))
@@ -34,6 +35,10 @@ def home2():
 def about():
     return render_template('about.html')
 
+@app.route('/logout')
+def logout():
+    return render_template('home.html')
+
 from flask import make_response, request, render_template, json
 
 @app.route('/signup-modal', methods=['GET', 'POST'])
@@ -53,6 +58,7 @@ def signup_modal():
         user = User(
             last_name=data['last_name'],
             first_name=data['first_name'],
+            gender = data['gender'],
             birthday=data['birthday'],
             email=data['email'],
             phone=data['phone'],
@@ -64,6 +70,11 @@ def signup_modal():
         try:
             db.session.add(user)
             db.session.commit()
+            session['username'] = user.username
+            session['first_name'] = user.first_name
+            session['last_name'] = user.last_name
+            session['gender'] = user.gender
+
         except Exception as e:
             db.session.rollback()
             return jsonify({"message": "Erreur serveur."}), 500
@@ -79,7 +90,18 @@ def signup_modal():
 
     return render_template('signup_modal.html')
 
-
+# Manage_cards
+@app.route('/manage_cards')
+def manage_cards():
+    if 'username' not in session:
+        return redirect('/')
+    
+    return render_template(
+        'manage_cards.html',
+        last_name=session.get('last_name', ''),
+        first_name=session.get('first_name', ''),
+        gender=session.get('gender', '')
+    )
 
 # Sauvegarde des images capturées
 import base64
@@ -128,3 +150,4 @@ if __name__ == '__main__':
     with app.app_context():
         db.create_all()
     app.run(debug=True)
+

@@ -33,13 +33,22 @@ body {
     border-bottom: 2px solid #d0e8ef;
 }
 
+.nav-links a.active,
+.nav-links a:focus {
+    border-bottom: 2px solid #208A9D;
+    padding-bottom: 0.2rem;
+    font-weight: bold;
+    color: #208A9D;
+}
+
+
 .logo {
     display: flex;
     align-items: center;
     gap: 0.5rem;
     font-weight: bold;
     font-size: 1.5rem;
-    color: #178a9c;
+    color: #208A9D;
 }
 
 .logo img {
@@ -55,14 +64,14 @@ body {
 
 .nav-links a {
     text-decoration: none;
-    color: #178a9c;
+    color: #208A9D;
     font-weight: 500;
     transition: 0.3s;
 }
 
 .nav-links a:hover,
 .nav-links a.active {
-    border-bottom: 2px solid #178a9c;
+    border-bottom: 2px solid #208A9D;
     padding-bottom: 0.2rem;
 }
 
@@ -77,7 +86,7 @@ body {
 }
 
 .user-info .avatar {
-    background-color: #178a9c;
+    background-color: #208A9D;
     color: white;
     padding: 0.4rem;
     border-radius: 50%;
@@ -106,7 +115,7 @@ body {
 .app-name {
     font-size: 4rem;
     font-weight: 800;
-    color: #178a9c;
+    color: #208A9D;
     text-shadow: 2px 2px #9ae6f0;
     margin-top: 1rem;
     background-color: rgba(144, 238, 144, 0.4); /* vert transparent */
