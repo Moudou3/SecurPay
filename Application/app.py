@@ -58,15 +58,15 @@ def signup_modal():
     if request.method == 'POST':
         data = request.form
 
-        # ❌ Si email déjà utilisé
+        #  Si email déjà utilisé
         if User.query.filter_by(email=data['email']).first():
             return jsonify({"message": "Cet email est déjà utilisé."}), 400
 
-        # ❌ Si username déjà utilisé
+        #  Si username déjà utilisé
         if User.query.filter_by(username=data['username']).first():
             return jsonify({"message": "Ce nom d'utilisateur est déjà utilisé."}), 400
 
-        # ✅ Sinon, création du compte
+        #  Sinon, création du compte
         user = User(
             last_name=data['last_name'],
             first_name=data['first_name'],
