@@ -136,13 +136,15 @@ def manage_cards():
     )
 
 # Sauvegarde des images capturées
-import base64
-import os
-from flask import request, jsonify
+from flask import Flask, request, jsonify
+import os, base64
+import numpy as np
+from mtcnn import MTCNN
+from PIL import Image
+import io
+import cv2
 
-import os
-import base64
-from flask import request, jsonify
+detector = MTCNN()
 
 @app.route('/register-face', methods=['POST'])
 def register_face():
@@ -153,28 +155,44 @@ def register_face():
         return jsonify({'message': 'Aucune image reçue'}), 400
 
     try:
-        # Décoder l’image base64
         header, encoded = image_data.split(',', 1)
         img_bytes = base64.b64decode(encoded)
+        pil_img = Image.open(io.BytesIO(img_bytes)).convert('RGB')
+        img_array = np.array(pil_img)
 
-        #  Créer le dossier de stockage s’il n’existe pas
+        results = detector.detect_faces(img_array)
+        if not results:
+            return jsonify({'message': 'Aucun visage détecté'}), 200
+
+        x, y, w, h = results[0]['box']
+        x, y = abs(x), abs(y)
+        face = img_array[y:y+h, x:x+w]
+        face_resized = cv2.resize(face, (160, 160))
+
         save_dir = os.path.join('static', 'faces', 'user_temp')
         os.makedirs(save_dir, exist_ok=True)
-
-        #  Générer un nom de fichier unique
         file_count = len(os.listdir(save_dir))
         filename = f"face_{file_count + 1:03}.png"
-        file_path = os.path.join(save_dir, filename)
+        filepath = os.path.join(save_dir, filename)
 
-        #  Enregistrer l’image
-        with open(file_path, 'wb') as f:
-            f.write(img_bytes)
-
-        return jsonify({'message': f"Image enregistrée sous {filename}"})
-
+        cv2.imwrite(filepath, cv2.cvtColor(face_resized, cv2.COLOR_RGB2BGR))
+        return jsonify({'message': f"Visage enregistré sous {filename}"})
     except Exception as e:
-        print("Erreur d'enregistrement image :", str(e))
+        print("Erreur:", e)
         return jsonify({'message': 'Erreur serveur'}), 500
+
+
+@app.route('/cancel-face-capture', methods=['POST'])
+def cancel_face_capture():
+    folder = os.path.join('static', 'faces', 'user_temp')
+    try:
+        if os.path.exists(folder):
+            for file in os.listdir(folder):
+                os.remove(os.path.join(folder, file))
+        return '', 204
+    except Exception as e:
+        print("Erreur suppression:", e)
+        return '', 500
 
 
 
