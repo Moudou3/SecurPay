@@ -1,0 +1,151 @@
+.cards-container {
+    padding: 2rem;
+    
+}
+
+.cards-title {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-size: 1.6rem;
+    color: #555;
+}
+
+.tabs {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    margin-left: -60%;
+}
+
+.tab {
+    padding: 0.6rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    background-color: #e5e5e5;
+    color: #208A9D;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    width: 15%;
+}
+
+.tab.active {
+    background-color: #208A9D;
+    color: white;
+}
+
+.cards-content {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    padding-top: 1.5rem;
+    position: relative;
+    margin-top: -40px;
+}
+
+/* Ajout du séparateur vertical */
+.cards-content::before {
+    content: "";
+    position: absolute;
+    left: 45%;
+    top: 30px;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 95%;
+    background-color: #c4c4c4; /* gris clair bien visible */
+    z-index: 0;
+}
+
+
+.left-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: -20px;
+    margin-top: -20px;
+}
+
+.card-image {
+    width: 220px;
+    margin-bottom: 1rem;
+}
+
+.card-owner {
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 2rem;
+}
+
+.actions {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.action-btn {
+    width: 80px;
+    height: 80px;
+    background-color: #208A9D;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.7rem;
+    text-align: center;
+    padding: 0.5rem;
+    cursor: pointer;
+}
+
+.action-btn i {
+    font-size: 1.4rem;
+    margin-bottom: 0.3rem;
+}
+
+.right-section {
+    flex: 1;
+    background: #f4f4f4;
+    border-radius: 12px;
+    padding: 2rem;
+    margin-left: 20px;
+}
+
+.limit {
+    margin-bottom: 1.5rem;
+}
+
+.limit label {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.progress-bar {
+    background-color: #ddd;
+    height: 10px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress {
+    background-color: #208A9D;
+    height: 100%;
+    width: 0%;
+}
+
+.modify-btn {
+    margin-top: 1rem;
+    padding: 0.7rem 1.5rem;
+    background-color: #208A9D;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 70%;
+    margin-left: 60px;
+}

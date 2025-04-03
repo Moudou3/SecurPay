@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="cards-container">
+    <h2 class="cards-title">Manage your cards</h2>
+
+    <div class="tabs">
+        <button class="tab active">Physical</button>
+        <button class="tab">Virtual</button>
+    </div>
+
+    <div class="cards-content">
+        <!-- Section gauche -->
+        <div class="left-section">
+            <img src="{{ url_for('static', filename='images/card.png') }}" alt="Card" class="card-image">
+            <p class="card-owner">MME {{ last_name }} {{ first_name }}</p>
+
+            <div class="actions">
+                <div class="action-btn">
+                    <i class="bi bi-lock-fill"></i>
+                    <span>Block<br>temporarily</span>
+                </div>
+                <div class="action-btn">
+                    <i class="bi bi-credit-card-2-back-fill"></i>
+                    <span>Oppose</span>
+                </div>
+                <div class="action-btn">
+                    <i class="bi bi-eye-fill"></i>
+                    <span>See<br>secret code</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section droite -->
+        <div class="right-section">
+            <div class="limit">
+                <label>Withdrawal limit</label>
+                <div class="progress-bar">
+                    <div class="progress" style="width: 0%"></div>
+                </div>
+                <p>0% used &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 400€</p>
+            </div>
+
+            <div class="limit">
+                <label>Payment limit</label>
+                <div class="progress-bar">
+                    <div class="progress" style="width: 0%"></div>
+                </div>
+                <p>0% used&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1000€</p>
+            </div>
+
+            <button class="modify-btn">Modify your limit</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
