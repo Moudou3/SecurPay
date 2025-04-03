@@ -1,3 +1,4 @@
+from werkzeug.security import generate_password_hash, check_password_hash
 from flask import Flask, render_template, request, jsonify, session, redirect
 from flask_sqlalchemy import SQLAlchemy
 import os
@@ -49,7 +50,31 @@ def about():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    return render_template("login.html")
+    if request.method == 'GET':
+        return render_template('login.html')
+
+    username = request.form.get('username')
+    password = request.form.get('password')
+
+    user = User.query.filter_by(username=username).first()
+
+    if not user:
+        return jsonify({"message": "Ce compte n'existe pas. Veuillez vous inscrire."}), 404
+
+    if not check_password_hash(user.password, password):
+        return jsonify({"message": "Mot de passe incorrect. Cliquez sur 'mot de passe oublié' pour réinitialiser."}), 401
+
+    # Connexion réussie → on enregistre l’utilisateur en session
+    session['username'] = user.username
+    session['first_name'] = user.first_name
+    session['last_name'] = user.last_name
+    session['gender'] = user.gender
+
+    return jsonify({
+        "message": "Connexion réussie !",
+        "redirect": "/home2"
+    }), 200
+
 
 @app.route('/logout')
 def logout():
@@ -79,7 +104,7 @@ def signup_modal():
             email=data['email'],
             phone=data['phone'],
             username=data['username'],
-            password=data['password'],
+            password=generate_password_hash(data['password']),
             biometrics="SampleData"
         )
 

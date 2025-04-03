@@ -46,10 +46,20 @@ function setupLoginBiometrics() {
 
             form.reset();
         })
-        .catch(err => {
-            console.error("Erreur : ", err);
-            showPopup("Erreur : " + err.message, "error");
+        .catch(async (err) => {
+            let errorMessage = "Une erreur est survenue.";
+            
+            try {
+                const text = await err.message;
+                const json = JSON.parse(text);
+                errorMessage = json.message || errorMessage;
+            } catch (e) {
+                errorMessage = err.message;
+            }
+        
+            showPopup(errorMessage, "error");
         });
+        
     });
 
     // Capture biométrique
